@@ -10,7 +10,7 @@ import cv2
 import torch
 from torch.utils.data.distributed import DistributedSampler
 
-# from slowfast.utils.env import pathmgr
+from slowfast.env import pathmgr
 
 from . import transform as transform
 
