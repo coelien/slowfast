@@ -18,7 +18,7 @@ from . import video_container as container
 from .build import DATASET_REGISTRY
 from .random_erasing import RandomErasing
 from .transform import create_random_augment
-
+from slowfast.env import pathmgr
 logger = logging.get_logger(__name__)
 
 
@@ -103,7 +103,7 @@ class Kinetics(torch.utils.data.Dataset):
         path_to_file = os.path.join(
             self.cfg.DATA.PATH_TO_DATA_DIR, "{}.csv".format(self.mode)
         )
-        assert os.path.exists(path_to_file), "{} dir not found".format(
+        assert pathmgr.exists(path_to_file), "{} dir not found".format(
             path_to_file
         )
 
@@ -115,7 +115,7 @@ class Kinetics(torch.utils.data.Dataset):
         self.epoch = 0.0
         self.skip_rows = self.cfg.DATA.SKIP_ROWS
 
-        with open(path_to_file, "r") as f:
+        with pathmgr.open(path_to_file, "r") as f:
             if self.use_chunk_loading:
                 rows = self._get_chunk(f, self.cfg.DATA.LOADER_CHUNK_SIZE)
             else:
